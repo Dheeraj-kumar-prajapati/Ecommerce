@@ -1,0 +1,35 @@
+.navbar {
+    background-color: black !important;
+}
+
+.navbar-nav .nav-link {
+    color: white !important;
+}
+
+.navbar-brand {
+    color: white !important;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ccc !important;
+}
+
+.navbar-nav .nav-link .fas {
+    color: white !important;
+}
+
+#navbarNav li {
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+#navbarNav {
+    position: absolute;
+    right: 20px;
+}
+
+.navbar-brand {
+    position: relative;
+    left: -40px;
+}
+

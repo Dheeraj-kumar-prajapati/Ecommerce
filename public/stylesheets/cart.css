@@ -1,0 +1,164 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 0;
+}
+
+h3 {
+    margin-left: 7%;
+    margin-top: 20px;
+}
+
+.cart-layout {
+    display: flex;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.cart-container {
+    flex: 3;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.cart-item {
+    display: grid;
+    grid-template-columns: 40px 100px 1fr 100px 100px;
+    gap: 20px;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+}
+
+.product-price,
+.total-price {
+    text-align: right;
+}
+
+.product-price {
+    /* border: 2px solid black; */
+    position: relative;
+    right: 45px;
+}
+
+.title {
+    position: relative;
+    top: -30px;
+}
+
+.total-price {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.checkbox-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.product-image img {
+    max-width: 100%;
+}
+
+.product-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-details h4 {
+    margin: 0 0 10px;
+}
+
+.product-details p {
+    margin: 0 0 20px;
+    color: #666;
+    font-size: 14px;
+}
+
+.quantity-delete {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.quantity-control {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-control button {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    background-color: #f7f7f7;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.quantity-control input {
+    width: 50px;
+    text-align: center;
+    border: 1px solid #ccc;
+    height: 30px;
+    margin: 0 5px;
+}
+
+.delete-button {
+    position: absolute;
+    left: 33%;
+}
+
+.delete-button button {
+    border: none;
+    background-color: #e74c3c;
+    color: white;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.delete-button button i {
+    margin-right: 5px;
+}
+
+.product-price span {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.subtotal-card {
+    flex: 1;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    align-self: flex-start;
+    margin-left: 40px;
+}
+
+.subtotal {
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.buy-button {
+    width: 100%;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.buy-button:hover {
+    background-color: #218838;
+}

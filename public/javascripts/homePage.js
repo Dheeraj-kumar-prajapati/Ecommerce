@@ -23,6 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             if (response.status === 500)
                                 window.location.href = "http://localhost:3000/login";
 
+                            else if (response.status === 300)
+                                alert("Product limit reached");
+
                             throw new Error('Network response was not ok');
                         }
                         return response.json();
@@ -57,13 +60,6 @@ document.addEventListener('DOMContentLoaded', () => {
             detailCard.querySelector('.product-description').textContent = productDescription;
             detailCard.querySelector('.detail-card-image img').src = productImage;
             detailCard.querySelector('.product-stock').textContent = productStock.trim();
-
-            // if (parseInt(productStock) === 0) {
-            //     document.querySelector('.add-to-cart-btn').setAttribute('disabled', 'true');
-            // }
-            // else {
-            //     document.querySelector('.add-to-cart-btn').removeAttribute('disabled');
-            // }
 
             detailCard.id = productId;
             detailCard.style.display = 'block';
@@ -120,9 +116,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     button.className = 'btn-primary';
                     button.textContent = 'View Details';
 
-                    const span = document.createElement('span');
+                    const span = document.createElement('p');
                     span.id = 'price';
-                    span.innerText = product.price;
+                    span.innerText = `Rs ${product.price}`;
 
                     const p = document.createElement('p');
                     p.id = 'description';
@@ -135,8 +131,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
                     cardBody.appendChild(title);
-                    cardBody.appendChild(button);
                     cardBody.appendChild(span);
+                    cardBody.appendChild(button);
                     cardBody.appendChild(p);
                     card.appendChild(img);
                     card.appendChild(stock);
@@ -151,14 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         detailCard.querySelector('.detail-card-image img').src = product.image;
                         detailCard.querySelector('.product-stock').textContent = product.stock;
 
-                        console.log("p stock : ", product.stock);
-
-                        // if (parseInt(product.stock) === 0) {
-                        //     document.querySelector('.add-to-cart-btn').setAttribute('disabled', 'true');
-                        // }
-                        // else {
-                        //     document.querySelector('.add-to-cart-btn').removeAttribute('disabled');
-                        // }
+                        // console.log("p stock : ", product.stock);
 
                         detailCard.id = product._id;
                         detailCard.style.display = 'block';

@@ -18,6 +18,8 @@ const removeProductFromCart = async (cartId, productId) => {
         userProduct.isRemoved = true;
 
         userCart.totalAmount -= userProduct.quantity * userProduct.product.price;
+        userProduct.quantity = 0;
+        console.log("quantity : ", userProduct.quantity);
 
         await userCart.save();
         console.log("Product removed");

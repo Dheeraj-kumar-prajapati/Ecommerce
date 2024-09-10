@@ -5,7 +5,7 @@ function calculateTotalCartPrice() {
     cartItems.forEach(cartItem => {
         const totalPriceElement = cartItem.querySelector('.totalPrice');
 
-        const price = parseFloat(totalPriceElement.textContent.replace('$', ''));
+        const price = parseFloat(totalPriceElement.textContent.replace('Rs', ''));
 
         totalCartPrice += price;
     });
@@ -61,7 +61,7 @@ document.querySelectorAll('.increase-btn').forEach(button => {
         const cartItem = button.closest('.cart-item');
         const input = cartItem.querySelector('input[type="number"]');
         const totalPrice = cartItem.querySelector('.totalPrice');
-        const productPrice = cartItem.querySelector('.product-price span:nth-child(2)').textContent.replace('$', '');
+        const productPrice = cartItem.querySelector('.product-price span:nth-child(2)').textContent.replace('Rs', '');
 
         const productId = cartItem.id;
 
@@ -85,7 +85,7 @@ document.querySelectorAll('.increase-btn').forEach(button => {
                 })
                 .then((data) => {
                     input.value = parseInt(input.value) + 1;
-                    totalPrice.innerHTML = `$${(parseInt(input.value) * parseFloat(productPrice)).toFixed(2)}`;
+                    totalPrice.innerHTML = `Rs${(parseInt(input.value) * parseFloat(productPrice)).toFixed(2)}`;
                     const subTotal = document.getElementById('subTotal');
                     subTotal.innerText = calculateTotalCartPrice();
                 })
@@ -105,7 +105,7 @@ document.querySelectorAll('.decrease-btn').forEach(button => {
         const cartItem = button.closest('.cart-item');
         const input = cartItem.querySelector('input[type="number"]');
         const totalPrice = cartItem.querySelector('.totalPrice');
-        const productPrice = cartItem.querySelector('.product-price span:nth-child(2)').textContent.replace('$', '');
+        const productPrice = cartItem.querySelector('.product-price span:nth-child(2)').textContent.replace('Rs', '');
 
         const productId = cartItem.id;
 
@@ -127,7 +127,7 @@ document.querySelectorAll('.decrease-btn').forEach(button => {
                     })
                     .then((data) => {
                         input.value = parseInt(input.value) - 1;
-                        totalPrice.innerHTML = `$${(parseInt(input.value) * parseFloat(productPrice)).toFixed(2)}`;
+                        totalPrice.innerHTML = `Rs${(parseInt(input.value) * parseFloat(productPrice)).toFixed(2)}`;
                         const subTotal = document.getElementById('subTotal');
                         subTotal.innerText = calculateTotalCartPrice();
 
@@ -153,13 +153,6 @@ document.querySelectorAll('.decrease-btn').forEach(button => {
                     }
                     return response.json();
                 })
-                // .then((data) => {
-                //     input.value = parseInt(input.value) - 1;
-                //     totalPrice.innerHTML = `$${(parseInt(input.value) * parseFloat(productPrice)).toFixed(2)}`;
-                //     const subTotal = document.getElementById('subTotal');
-                //     subTotal.innerText = calculateTotalCartPrice();
-
-                // })
                 .catch(error => {
                     console.error('Error in :', error);
                 });
@@ -171,21 +164,3 @@ document.querySelectorAll('.decrease-btn').forEach(button => {
         }
     });
 });
-
-// document.querySelector('.buy-button').addEventListener('click', () => {
-//     fetch('/users/order-page', {
-//         method: 'GET'
-//     })
-//         .then(response => response.json())
-//         .then(data => {
-//             // if (data.success) {
-//             //     alert('Order placed successfully!');
-//             // } else {
-//             //     alert('Failed to place order: ' + data.message);
-//             // }
-//         })
-//         .catch(error => {
-//             console.error('Error:', error);
-//             alert('An error occurred. Please try again.');
-//         });
-// })

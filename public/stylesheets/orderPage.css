@@ -1,0 +1,26 @@
+.order-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.navbar {
+    background-color: #000 !important;
+}
+.order-summary {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f8f8f8;
+}
+.order-summary h4 {
+    margin-bottom: 20px;
+}
+.address-section,
+.payment-method {
+    margin-top: 20px;
+}
+.total-price {
+    margin-top: 20px;
+    font-size: 1.2em;
+    font-weight: bold;
+}

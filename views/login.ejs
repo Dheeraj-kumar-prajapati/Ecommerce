@@ -6,18 +6,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
     <link rel="stylesheet" href="/stylesheets/login.css">
+    <link rel="stylesheet" href="/stylesheets/navBar.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        .navbar {
+            background-color: #000 !important;
+        }
+    </style>
 
 </head>
 
 <body>
 
-    <% if ( isAdmin === true ) { %>
-        <%- include('adminNavBar') %>
-            <% } else { %>
-                <%- include('navBar') %>
-                    <% } %>
+    <!-- <% if ( isAdmin === true ) { %> -->
+    <!-- <%- include('adminNavBar') %> -->
+    <!-- <% } else { %> -->
+    <%- include('navBar') %>
+        <!-- <% } %> -->
 
         <div class="login-container">
 
@@ -58,7 +65,7 @@
                 const password = formData.get('password');
                 const isAdmin = document.getElementById('admin').checked;
 
-                console.log("admin :",isAdmin);
+                console.log("admin :", isAdmin);
 
                 if (email && password) {
                     fetch('/operation/login', {
@@ -66,7 +73,7 @@
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ email, password, isAdmin})
+                        body: JSON.stringify({ email, password, isAdmin })
                     })
                         .then(response => {
                             return response.json();
@@ -75,7 +82,7 @@
                             if (data.message) {
                                 window.location.href = data.redirectUrl;
                             }
-                            else if(data.error){
+                            else if (data.error) {
                                 document.getElementById('error-message').innerText = data.error;
                             }
                         })

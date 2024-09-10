@@ -3,30 +3,11 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 const { getUser, addProductToCart, getUserProducts } = require('../controller/isUserValidate');
 const { removeProductFromCart, increaseQuantity, decreaseQuantity, reset } = require('../controller/cartOperation');
+const { addCartAuth, cartAuth } = require('../controller/middleware');
 
 router.use(express.json());
 
-const authMiddleware = (req, res, next) => {
-    const privateKey = 'This is my private key';
-    const token = req.cookies.token;
-    const isAdmin = req.cookies.isAdmin;
-    if (!token) {
-        return res.redirect('/login');
-    }
-    try {
-        const decoded = jwt.verify(token, privateKey);
-        req.userId = decoded.id;
-        req.isAdmin = decoded.isAdmin;
-        console.log("admin : ", isAdmin);
-        next();
-    } catch (err) {
-        return res.status(401).json({ error: 'Invalid token' });
-    }
-};
-
-router.use(authMiddleware);
-
-router.post('/add-to-cart', async (req, res) => {
+router.post('/add-to-cart', addCartAuth, async (req, res) => {
     const userId = req.userId;
     const { productId } = req.body;
 
@@ -45,7 +26,7 @@ router.post('/add-to-cart', async (req, res) => {
         if (await addProductToCart(user.cartId, productId)) {
             return res.status(200).json({ message: "Product added to cart" });
         } else {
-            return res.status(500).json({ message: "Error adding product to cart" });
+            return res.status(300).json({ message: "Product limit reached" });
         }
     } catch (error) {
         console.error("Error in add-to-cart route:", error);
@@ -53,7 +34,7 @@ router.post('/add-to-cart', async (req, res) => {
     }
 });
 
-router.get('/showCart', async (req, res) => {
+router.get('/showCart', cartAuth, async (req, res) => {
     const userId = req.userId;
     const isAdmin = req.isAdmin;
 
@@ -77,7 +58,7 @@ router.get('/showCart', async (req, res) => {
 
 })
 
-router.post('/remove-from-cart', async (req, res) => {
+router.post('/remove-from-cart', cartAuth, async (req, res) => {
     const { productId } = req.body;
     const userId = req.userId;
 
@@ -100,7 +81,7 @@ router.post('/remove-from-cart', async (req, res) => {
     }
 })
 
-router.post('/increase-product', async (req, res) => {
+router.post('/increase-product', cartAuth, async (req, res) => {
     const { productId, value } = req.body;
     const userId = req.userId;
 
@@ -121,7 +102,7 @@ router.post('/increase-product', async (req, res) => {
     }
 })
 
-router.post('/decrease-product', async (req, res) => {
+router.post('/decrease-product', cartAuth, async (req, res) => {
     const { productId } = req.body;
     const userId = req.userId;
 
@@ -142,7 +123,7 @@ router.post('/decrease-product', async (req, res) => {
     }
 })
 
-router.post('/reset-quantity', async (req, res) => {
+router.post('/reset-quantity', cartAuth, async (req, res) => {
     const { productId } = req.body;
     const userId = req.userId;
 

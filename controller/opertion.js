@@ -113,12 +113,10 @@ router.post('/verify-otp', async (req, res) => {
         if (otp !== req.session.otp) {
             if (req.session.flag) {
                 return res.status(400).json({
-                    error: 'Invalid OTP. Please try again.',
-                    redirectTo: '/operation/verify'
+                    error: 'Invalid OTP. Please try again.'
                 });
             }
         }
-
 
         if (req.session.flag) {
             const email = req.session.email;
@@ -133,7 +131,7 @@ router.post('/verify-otp', async (req, res) => {
             return res.redirect('/login');
         }
         else {
-            res.render('resetForm');
+            return res.render('resetForm');
         }
     } catch (error) {
         console.error("Error during OTP verification:", error);
@@ -143,12 +141,6 @@ router.post('/verify-otp', async (req, res) => {
 
 router.get('/logout', (req, res) => {
     console.log("i am in logout");
-    res.clearCookie('token');
-    res.clearCookie('isAdmin');
-    return res.redirect('/login');
-})
-
-router.get('/admin-logout', (req, res) => {
     res.clearCookie('token');
     res.clearCookie('isAdmin');
     return res.redirect('/login');

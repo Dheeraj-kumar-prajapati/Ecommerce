@@ -11,6 +11,10 @@ html {
     height: 100vh;
 }
 
+.navbar {
+    background-color: #000 !important;
+}
+
 .image-section {
     flex: 1;
     background-color: #f0f0f0;

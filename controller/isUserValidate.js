@@ -1,9 +1,6 @@
 const { User, Cart, Product, Order } = require('../models/schema');
 const bcrypt = require('bcryptjs');
 
-// function totalAmount(cartId, productId) {
-
-// }
 
 const addUser = async (email, username, password) => {
     try {
@@ -38,6 +35,7 @@ const addUser = async (email, username, password) => {
 const addProductToCart = async (cartId, productId) => {
     try {
         const userCart = await Cart.findOne({ _id: cartId });
+        console.log("user cart : ", userCart);
 
         if (!userCart) {
             throw new Error('Cart not found');
@@ -49,20 +47,31 @@ const addProductToCart = async (cartId, productId) => {
             throw new Error('Product not found');
         }
 
-        const existingProduct = userCart.products.find(p => p.product._id.toString() === productId);
+        console.log("prodcut :", product);
+
+        const existingProduct = userCart.products.find(p => p.product._id.toString() === productId)
+
+        console.log("exist : ", existingProduct);
+        console.log("stock  : ", product.stock);
 
         if (existingProduct) {
-            if (existingProduct.isRemoved) {
-                existingProduct.isRemoved = false;
-                existingProduct.quantity = 1;
+            if (existingProduct.quantity < product.stock) {
+                if (existingProduct.isRemoved) {
+                    existingProduct.isRemoved = false;
+                    existingProduct.quantity = 1;
+                }
+                else
+                    existingProduct.quantity += 1;
             }
             else
-                existingProduct.quantity += 1;
+                return false;
 
-            // userCart.totalAmount += existingProduct.price;
-        } else {
+        } else if (product.stock > 0) {
             userCart.products.push({ product: product });
         }
+        else
+            return false
+
         userCart.totalAmount += product.price;
 
         await userCart.save();
@@ -76,38 +85,38 @@ const addProductToCart = async (cartId, productId) => {
     }
 }
 
-const removeFromCart = async (cartId, productId) => {
-    try {
-        const userCart = await Cart.findOne({ _id: cartId });
-
-        if (!userCart) {
-            throw new Error('Cart not found');
-        }
-
-        const product = await Product.findOne({ _id: productId });
-
-        if (!product) {
-            throw new Error('Product not found');
-        }
-
-        const existingProduct = userCart.products.find(p => p.product._id.toString() === productId);
-
-        if (existingProduct) {
-            existingProduct.quantity += 1;
-        } else {
-            userCart.products.push({ product: product, quantity: 1 });
-        }
-
-        await userCart.save();
-
-        console.log("Product added to cart successfully");
-        return true;
-
-    } catch (error) {
-        console.error("Error in adding product to cart", error);
-        throw error;
-    }
-}
+// const removeFromCart = async (cartId, productId) => {
+// try {
+// const userCart = await Cart.findOne({ _id: cartId });
+// 
+// if (!userCart) {
+// throw new Error('Cart not found');
+// }
+// 
+// const product = await Product.findOne({ _id: productId });
+// 
+// if (!product) {
+// throw new Error('Product not found');
+// }
+// 
+// const existingProduct = userCart.products.find(p => p.product._id.toString() === productId);
+// 
+// if (existingProduct) {
+// existingProduct.quantity += 1;
+// } else {
+// userCart.products.push({ product: product, quantity: 1 });
+// }
+// 
+// await userCart.save();
+// 
+// console.log("Product added to cart successfully");
+// return true;
+// 
+// } catch (error) {
+// console.error("Error in adding product to cart", error);
+// throw error;
+// }
+// }
 
 const getUserProducts = async (cartId) => {
     try {
@@ -130,9 +139,6 @@ const getUserProducts = async (cartId) => {
 };
 
 
-
-
-
 const checkUser = async (email) => {
     try {
         const user = await User.findOne({ email });
@@ -149,18 +155,10 @@ const findUser = async (email, password, isAdmin) => {
         console.log("user :", user);
 
         if (user && await bcrypt.compare(password, user.password)) {
-            // if (isAdmin) {
             if (user.role === 'admin' || user.role === 'user')
                 return user;
             else
                 return false;
-            //    }
-            // else {
-            //     if (user.role === 'user')
-            //         return user;
-            //     else
-            //         return false;
-            // }
         }
 
         return null;
@@ -270,4 +268,15 @@ const checkProductQuantity = async (userCart) => {
 };
 
 
-module.exports = { addUser, checkUser, findUser, getUser, getAdmin, resetPassword, addProductToCart, getUserProducts, findAdmin, checkProductQuantity };
+module.exports = {
+    addUser,
+    checkUser,
+    findUser,
+    getUser,
+    getAdmin,
+    resetPassword,
+    addProductToCart,
+    getUserProducts,
+    findAdmin,
+    checkProductQuantity
+};

@@ -33,7 +33,7 @@ app.use('/operation', operations);
 app.use('/userProfile', userProfile);
 app.use('/admin', admin);
 
-app.get('/login',(req, res) => {
+app.get('/login', (req, res) => {
   return res.render('login', { isAdmin: req.isAdmin });
 })
 

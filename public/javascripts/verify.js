@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', function () {
     const otpForm = document.getElementById('otpForm');
     const errorMessage = document.getElementById('errorMessage');
@@ -21,12 +22,21 @@ document.addEventListener('DOMContentLoaded', function () {
                 },
                 body: JSON.stringify({ otp })
             })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.error) {
+                        errorMessage.textContent = data.error;
+                    } else {
+                        alert("Sign up done")
+                        window.location.href = '/login';
+                    }
+                })
                 .catch(error => {
                     console.error('Error:', error);
                     errorMessage.textContent = 'OTP verification failed. Please try again.';
                 });
         } else {
-            errorMessage.textContent = 'Please enter all OTP digits.';
+            errorMessage.textContent = 'Please enter 4 digits OTP.';
         }
     });
 

@@ -34,6 +34,11 @@
     padding: 5px;
 }
 
+.btn-primary{
+    position: relative;
+    bottom: 10px;
+}
+
 .card img {
     height: 220px;
 }
@@ -49,9 +54,13 @@
     border: 1px solid black;
 }
 
-#price,
+
 #description {
     display: none;
+}
+
+#price{
+    color: red;
 }
 
 /* detail card */

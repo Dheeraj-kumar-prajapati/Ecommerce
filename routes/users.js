@@ -110,7 +110,7 @@ router.post('/change-address', authMiddleware, async (req, res) => {
   }
 });
 
-router.get('/order-history',authMiddleware, async (req, res) => {
+router.get('/order-history', authMiddleware, async (req, res) => {
   try {
     const userId = req.userId;
 
@@ -136,7 +136,7 @@ router.get('/order-history',authMiddleware, async (req, res) => {
 
     const orderHistory = orders.map(order => {
       return {
-        ...order.toObject(), 
+        ...order.toObject(),
         carts: carts.filter(cart => order.cartId.includes(cart._id.toString()))
           .map(cart => ({
             ...cart.toObject(),

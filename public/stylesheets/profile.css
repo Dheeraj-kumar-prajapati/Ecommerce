@@ -5,6 +5,10 @@ body {
     background-color: #f4f4f4;
 }
 
+.navbar {
+    background-color: #000 !important;
+}
+
 .container1 {
     display: flex;
     min-height: 100vh;
@@ -44,8 +48,8 @@ body {
     padding: 20px;
 }
 
-.main-content h2{
-margin-bottom: 20px;
+.main-content h2 {
+    margin-bottom: 20px;
 }
 
 .user-info {
